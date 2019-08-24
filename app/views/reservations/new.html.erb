@@ -1,0 +1,27 @@
+<h1>Reserve Ticket</h1>
+<% @tickets.each do |t| %>
+    Ticket Type: <%= t.ticket_type %>
+    Quantity: <%= t.quantity %>
+    <br/>
+<% end %>
+
+<%= form_for @reservation do |f|  %>
+<%= render 'shared/errors' , object: f.object %>
+
+    <select name="reservation[ticket_id]"  required="required">
+     <option value="" >Please select</option>
+        <% @tickets.each_with_index do |t| %>
+            <option value="<%= t.id %>"><%= t.ticket_type %></option>
+         <% end %>
+    </select> <br/>
+    <select name="reservation[reservation_type]"  required="required">
+        <option value="">Please select</option>
+        <option value="1" selected="selected">Multiple</option>
+        <option value="2">All together</option>
+        <option value="3">Avoid One</option>
+    </select><br/>
+    <%= f.label :quantity, class: "form-control" %>
+    <%= f.number_field :quantity, class: "form-control", required: true %>
+    <br/>
+    <%= f.submit "Purchase", class: "btn btn-primary" %>
+<% end %>

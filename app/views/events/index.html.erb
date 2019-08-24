@@ -1,7 +1,16 @@
-<h1>Events#index</h1>
+<h1>All Events</h1>
 <% @events.each do |e| %>
 <%= e.name %>
-<%= e.date.strftime("%Y-%m-%d") %>
-<%= e.date.strftime("%H:%M") %>
+Date: <%= e.date.strftime("%Y-%m-%d") %>
+Time: <%= e.date.strftime("%H:%M") %>
+<ul>
+<% e.tickets.each do |t| %>
+    <li><%= t.ticket_type %> Quantity: <%= t.quantity %> </li>
+<% end %>
+</ul>
 <br/>
+<%= form_for e, url: reserve_path, :html =>{:method => :get} do |f| %>
+<%= f.hidden_field :event_id, :value => e.id %>
+<%= f.submit "Book" %>
+<% end%>
 <% end %>
