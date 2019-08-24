@@ -1,0 +1,14 @@
+<%= @reservation.paid %>
+<%= @reservation.ticket.ticket_type %>
+<%= @reservation.user.name %>
+<% if !@reservation.paid %>
+<%= form_for reservation_path, method: :patch do |f| %>
+<%= f.label :card %>
+<%= f.text_field :card %>
+
+<%= f.label :token %>
+<%= f.text_field :token %>
+
+<%= f.submit "Pay" %>
+<% end %>
+<% end %>

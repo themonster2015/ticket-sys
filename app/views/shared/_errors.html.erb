@@ -1,6 +1,6 @@
 <% if object.errors.any? %>
 <p>There <%= object.errors.count == 1 ? 'is': 'are' %> <%= pluralize( object.errors.count, 'error') %> 
-that prevent you from creating the user </p>
+that prevent you from creating your reservation </p>
 <% object.errors.full_messages.each do |err| %>
     <li class="text-danger"><%= err %> </li>
 <% end %>

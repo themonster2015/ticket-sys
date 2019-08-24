@@ -5,12 +5,14 @@ Date: <%= e.date.strftime("%Y-%m-%d") %>
 Time: <%= e.date.strftime("%H:%M") %>
 <ul>
 <% e.tickets.each do |t| %>
-    <li><%= t.ticket_type %> Quantity: <%= t.quantity %> </li>
+    <li><%= t.ticket_type %>- <%= t.quantity==0 ? 'Unavailable' : "Quantity: #{t.quantity}" %>
+ </li>
 <% end %>
 </ul>
 <br/>
-<%= form_for e, url: reserve_path, :html =>{:method => :get} do |f| %>
+<%= form_for :reservation, url: reserve_path, :html =>{:method => :get} do |f| %>
 <%= f.hidden_field :event_id, :value => e.id %>
 <%= f.submit "Book" %>
 <% end%>
 <% end %>
+

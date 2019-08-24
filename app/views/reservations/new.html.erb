@@ -1,7 +1,7 @@
 <h1>Reserve Ticket</h1>
 <% @tickets.each do |t| %>
     Ticket Type: <%= t.ticket_type %>
-    Quantity: <%= t.quantity %>
+    Quantity: <%= t.quantity==0 ? 'Unavailable' : t.quantity %>
     <br/>
 <% end %>
 
@@ -23,5 +23,6 @@
     <%= f.label :quantity, class: "form-control" %>
     <%= f.number_field :quantity, class: "form-control", required: true %>
     <br/>
+    <%= hidden_field_tag 'reservation[event_id]', params[:reservation][:event_id] %>
     <%= f.submit "Purchase", class: "btn btn-primary" %>
 <% end %>

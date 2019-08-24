@@ -2,12 +2,12 @@ class ReservationsController < ApplicationController
     before_action :session_expires, only: [:create]
     before_action :update_session_time, only: [:new]
     def new 
-        @tickets = Ticket.where(event_id:params[:event][:event_id])
+        @tickets = Ticket.where(event_id:reservation_params[:event_id])
         @reservation = Reservation.new
     end
 
     def create 
-        @tickets = Ticket.where(event_id:1)
+        @tickets = Ticket.where(event_id:reservation_params[:event_id])
         @reservation = Reservation.new
         @ticket = Ticket.find_by(id:reservation_params[:ticket_id])
         choice = reservation_params[:reservation_type].to_i
@@ -20,17 +20,29 @@ class ReservationsController < ApplicationController
             @ticket.update_quantity remaining_quantity
             if @reservation.save 
                 flash[:success] = "Successfully booked"
-                redirect_to events_url
+                redirect_to @reservation
             end
         else
             render :new
         end
     end
 
+    def show 
+        @reservation = Reservation.includes(:ticket,:user).find(params[:id])
+    end
+
+    def update 
+        @reservation  = Reservation.find(params[:id])
+        a = Adapters::Payment::Gateway.charge(amount:15,token:"1212")
+        p a
+        @reservation.pay 
+        flash[:success] = "paid!"
+        redirect_to @reservation
+    end
     private 
 
     def reservation_params
-        params.require(:reservation).permit(:reservation_type,:ticket_id,:quantity)
+        params.require(:reservation).permit(:reservation_type,:ticket_id,:quantity, :event_id)
     end
 
     def session_expires
