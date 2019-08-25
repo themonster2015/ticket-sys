@@ -6,7 +6,7 @@ This is a simple Ruby on Rails app built to simulate the process of booking tick
 
 To simplify things, the payment process made use of a provided payment module.
 
-![Payment Page](https://ibb.co/PgftHGK)
+![Payment Page](https://i.ibb.co/RcV7wTf/Screen-Shot-2019-08-25-at-23-07-03.png)
 
 On the payment page, to stimulate payment errors:
 
