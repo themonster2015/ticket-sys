@@ -1,6 +1,7 @@
 class ReservationsController < ApplicationController
-    before_action :session_expires, only: [:create]
-    before_action :update_session_time, only: [:new]
+    before_action :session_expires, only: [:update]
+    before_action :update_session_time, only: [:create]
+    rescue_from Exception, :with => :card_error
     def new 
         @tickets = Ticket.where(event_id:reservation_params[:event_id])
         @reservation = Reservation.new
@@ -30,21 +31,34 @@ class ReservationsController < ApplicationController
     def show 
         @reservation = Reservation.includes(:ticket,:user).find(params[:id])
     end
-
+    
+    def edit 
+    end
     def update 
-        @reservation  = Reservation.find(params[:id])
-        a = Adapters::Payment::Gateway.charge(amount:15,token:"1212")
-        p a
-        @reservation.pay 
-        flash[:success] = "paid!"
+        @reservation  = Reservation.find(card_params[:id])
+        a = Adapters::Payment::Gateway.charge(amount:15,token:card_params[:token])
+        if Adapters::Payment::Gateway::Result
+            @reservation.pay 
+            flash[:success] = "paid!"
+            redirect_to @reservation
+        end
+    end
+
+    private 
+
+    def card_error(e)
+        flash[:danger] = e.message
         redirect_to @reservation
     end
-    private 
 
     def reservation_params
         params.require(:reservation).permit(:reservation_type,:ticket_id,:quantity, :event_id)
     end
 
+    def card_params 
+        params.require(:pay).permit(:card,:token,:id)
+    end
+    
     def session_expires
         unless session[:expires_at] > Time.now
             flash[:danger] = "session expired after 15 minutes idle"
@@ -54,7 +68,5 @@ class ReservationsController < ApplicationController
 
     def update_session_time
         session[:expires_at] = 2.minutes.from_now
-        p session[:expires_at]
-        p "the expire time"
     end
 end

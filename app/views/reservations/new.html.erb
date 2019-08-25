@@ -1,7 +1,9 @@
-<h1>Reserve Ticket</h1>
+<h1 class='h1 text-center'>Reserve Ticket</h1>
+<div class='row'>
+<div class='col-md-6 col-md-offset-3'>
 <% @tickets.each do |t| %>
-    Ticket Type: <%= t.ticket_type %>
-    Quantity: <%= t.quantity==0 ? 'Unavailable' : t.quantity %>
+    Ticket Type: <span class='h3 text-danger'> <%= t.ticket_type %></span>
+    Quantity: <span class='h3 text-danger'> <%= t.quantity==0 ? 'Unavailable' : t.quantity %></span>
     <br/>
 <% end %>
 
@@ -20,9 +22,11 @@
         <option value="2">All together</option>
         <option value="3">Avoid One</option>
     </select><br/>
-    <%= f.label :quantity, class: "form-control" %>
+    <%= f.label :quantity %>
     <%= f.number_field :quantity, class: "form-control", required: true %>
     <br/>
     <%= hidden_field_tag 'reservation[event_id]', params[:reservation][:event_id] %>
     <%= f.submit "Purchase", class: "btn btn-primary" %>
 <% end %>
+</div>
+</div>

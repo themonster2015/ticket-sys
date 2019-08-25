@@ -1,14 +1,19 @@
-<%= @reservation.paid %>
-<%= @reservation.ticket.ticket_type %>
-<%= @reservation.user.name %>
+<h1 class='h1 text-center'>Pay for Your Reservation</h1>
+<div class='row'>
+<div class='col-md-6 col-md-offset-3'>
+Have you paid?: <%= @reservation.paid ? "Yes" : "No" %> <br/>
+Your Ticket Class: <%= @reservation.ticket.ticket_type %><br/>
+Your Client's Username: <%= @reservation.user.name %><br/>
 <% if !@reservation.paid %>
-<%= form_for reservation_path, method: :patch do |f| %>
+<%= form_for :pay, :url => pay_path do |f| %>
 <%= f.label :card %>
 <%= f.text_field :card %>
-
+<br/>
 <%= f.label :token %>
 <%= f.text_field :token %>
-
-<%= f.submit "Pay" %>
+<%= hidden_field(:pay, :id, :value => @reservation.id) %>
+<%= f.submit "Pay", class: 'btn btn-primary btn-large' %>
 <% end %>
 <% end %>
+</div>
+</div>
