@@ -1,4 +1,4 @@
-<h1 class='h1 text-center'>Pay for Your Reservation</h1>
+<h1 class='h1 text-center'><%= @reservation.paid ? "Your Reservation Information" : "Pay for Your Reservation" %></h1>
 <div class='row'>
 <div class='col-md-6 col-md-offset-3'>
 Have you paid?: <%= @reservation.paid ? "Yes" : "No" %> <br/>
@@ -12,8 +12,12 @@ Your Client's Username: <%= @reservation.user.name %><br/>
 <%= f.label :token %>
 <%= f.text_field :token %>
 <%= hidden_field(:pay, :id, :value => @reservation.id) %>
+<br/>
 <%= f.submit "Pay", class: 'btn btn-primary btn-large' %>
 <% end %>
+<% end %>
+<% if @reservation.paid %>
+<button><%= link_to "Back to Events", events_path %></button>
 <% end %>
 </div>
 </div>

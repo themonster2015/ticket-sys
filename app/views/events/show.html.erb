@@ -1,3 +1,21 @@
-<h1>Events#show</h1>
+<h1 class='text-center'>Event's Information</h1>
+<div class='row'>
+<div class='col-md-6 col-md-offset-3'>
 <%= @event.name %>
-<%= @event.date %>
+Date: <%= @event.date.strftime("%Y-%m-%d") %>
+Time: <%= @event.date.strftime("%H:%M") %>
+<ul>
+<% @event.tickets.each do |t| %>
+    <li><%= t.ticket_type %>- <%= t.quantity==0 ? 'Unavailable' : "Quantity: #{t.quantity}" %>
+ </li>
+<% end %>
+</ul>
+<br/>
+<%= form_for :reservation, url: reserve_path, :html =>{:method => :get} do |f| %>
+<%= f.hidden_field :event_id, :value => @event.id %>
+<br/>
+<button class='btn btn-success'><%= link_to "Back", events_path %></button>
+<%= f.submit "Book", class: 'btn-primary btn' %>
+<% end %>
+</div>
+</div>

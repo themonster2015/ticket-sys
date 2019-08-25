@@ -9,21 +9,17 @@ class ReservationsController < ApplicationController
 
     def create 
         @tickets = Ticket.where(event_id:reservation_params[:event_id])
-        @reservation = Reservation.new
         @ticket = Ticket.find_by(id:reservation_params[:ticket_id])
-        choice = reservation_params[:reservation_type].to_i
-        booked = reservation_params[:quantity].to_i
-        
-        result = check_quantity(booked, @ticket.quantity) && booking_choice(choice,booked, @ticket.quantity)
-        remaining_quantity = @ticket.quantity - reservation_params[:quantity].to_i
+        result = check_quantity(reservation_params[:quantity].to_i, @ticket.quantity) && booking_choice(reservation_params[:reservation_type].to_i,reservation_params[:quantity].to_i, @ticket.quantity)
         if result 
             @reservation = Reservation.create(quantity:reservation_params[:quantity],user_id:1,ticket_id:reservation_params[:ticket_id])
-            @ticket.update_quantity remaining_quantity
+            @ticket.update_quantity (@ticket.quantity - reservation_params[:quantity].to_i)
             if @reservation.save 
                 flash[:success] = "Successfully booked"
                 redirect_to @reservation
             end
         else
+            @reservation = Reservation.new
             render :new
         end
     end

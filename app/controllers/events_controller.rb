@@ -4,22 +4,7 @@ class EventsController < ApplicationController
   end
 
   def show
-  end
-  
-  def reserve
-    
-  end
-  def  new
-    @event = Event.new
-  end
-  
-  def create 
-    event = Event.create(event_params)
-    if event.save 
-      redirect_to event
-    else
-      render :new
-    end
+    @event = Event.includes(:tickets).find(params[:id])
   end
 
   private 
