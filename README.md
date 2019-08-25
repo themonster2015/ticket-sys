@@ -41,3 +41,7 @@ If the test suite passes, you'll be ready to run the app in a local server:
 ```console
  rails server
 ```
+
+##
+
+The application can be viewed live at [Rails Ticket Booking App](https://stormy-reef-25660.herokuapp.com/)
