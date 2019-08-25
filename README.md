@@ -1,24 +1,32 @@
-# README
+# Ruby on Rails Ticket Booking Application
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+This is a simple Ruby on Rails app built to simulate the process of booking tickets in a typical ticket booking system.
 
-Things you may want to cover:
+## Getting started
 
-* Ruby version
+To get started with the app, clone the repo and then install the needed gems:
 
-* System dependencies
+```console
+ bundle install --without production
+```
 
-* Configuration
+Next, migrate the database:
 
-* Database creation
+```console
+ rails db:migrate
+```
 
-* Database initialization
+Finally, run the test suite to verify that everything is working correctly:
 
-* How to run the test suite
+```console
+ rails test
+```
 
-* Services (job queues, cache servers, search engines, etc.)
+If the test suite passes, you'll be ready to run the app in a local server:
 
-* Deployment instructions
+```console
+ rails server
+```
 
-* ...
+For more information, see the
+[_Ruby on Rails Tutorial_ book](https://www.railstutorial.org/book).

@@ -3,7 +3,9 @@
 one:
   user: one
   ticket: one
+  quantity: 2
 
 two:
   user: two
   ticket: two
+  quantity: 1

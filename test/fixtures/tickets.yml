@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: 
+  ticket_type: "first class"
   quantity: 1
   event: one
 
 two:
-  type: 
+  ticket_type: "second class"
   quantity: 1
   event: two
