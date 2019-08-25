@@ -63,6 +63,6 @@ class ReservationsController < ApplicationController
     end
 
     def update_session_time
-        session[:expires_at] = 2.minutes.from_now
+        session[:expires_at] = 15.minutes.from_now
     end
 end

@@ -1,6 +1,6 @@
 # Ruby on Rails Ticket Booking Application
 
-This is a simple Ruby on Rails app built to simulate the process of booking tickets in a typical ticket booking system.
+This is a simple Ruby on Rails app built to simulate the process of booking tickets in a typical ticket booking system. By default, the user that will be making the booking will be assigned to the first user in the database.
 
 ## The payment process
 
@@ -15,6 +15,8 @@ On the payment page, to stimulate payment errors:
 - Enter 'payment_error' to receive payment error message.
 
 - Enter anything else to stimulate a successful transaction.
+
+All reservations not paid within 15 minutes will expire and the user will have to start again. The unpaid reservations will be deleted from the database through a cronjob that runs every 16 minutes.
 
 ## Getting started
 

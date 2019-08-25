@@ -4,4 +4,8 @@ class Reservation < ApplicationRecord
   def pay 
     update_attribute(:paid, true)
   end
+
+  def self.delete_expired_reservations
+    Reservation.where(:paid => false).destroy_all
+  end
 end
