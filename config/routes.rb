@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 Rails.application.routes.draw do
-  resources :events, only: [:index,:show]
+  resources :events, only: %i[index show]
   get '/reserve', to: 'reservations#new'
   post '/reserve', to: 'reservations#create'
   resources :reservations
